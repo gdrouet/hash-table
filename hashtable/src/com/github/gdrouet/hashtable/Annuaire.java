@@ -42,7 +42,7 @@ public enum  Annuaire {
     /**
      * Table de hachage.
      */
-    private HashTable table = new HashTable();
+    private Hashtable table = new Hashtable();
 
     /**
      * <p>
