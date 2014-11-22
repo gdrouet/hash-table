@@ -73,6 +73,22 @@ public enum  Annuaire {
     }
 
     /**
+     * Spprime un étudiant  dans la table de hachage.
+     *
+     * @param input fonction de lecture sur l'entrée standard
+     */
+    public void supprimer(final Function<String, String> input) {
+        final Etudiant e = Etudiant.class.cast(table.get(input.apply("Login: ")));
+
+        if (table.remove(e.getLogin()) == null) {
+            input.apply("Aucun étudiant dans l'annuaire avec ce login. Appuyer sur entrer pour continuer...");
+        } else {
+            input.apply("Etudiant supprimé. Appuyer sur entrer pour continuer...");
+        }
+    }
+
+
+    /**
      * Recherche un étudiant et affiche le résultat.
      *
      * @param input fonction de lecture sur l'entrée standard
@@ -125,7 +141,7 @@ public enum  Annuaire {
                     INSTANCE.modifier(input);
                     break;
                 case "3":
-                    new UnsupportedOperationException().printStackTrace(System.out);
+                    INSTANCE.supprimer(input);
                     break;
                 case "4":
                     INSTANCE.rechercher(input);
