@@ -4,22 +4,13 @@ public class Test04 {
 
     public static void main(final String[] args) {
         Hashtable hashTable = new Hashtable();
-        final int start = 1;
-        final int end = 20;
-
-        System.out.println();
-        System.out.println("#### Ajout de clés avec des longueurs de " + start + " à " + end + " ####");
-
-        for (int i = start; i <= end; i++) {
-            String str = "";
-
-            for (int j = 0;j < i; j++) {
-                str += "a";
-            }
-
-            System.out.println("add(\"" + str + "\", \"v\"), len=" + str.length() + ": " + hashTable.add(str, "v"));
-        }
-
+        System.out.println("#### Ajout de clés avec des longueurs de 3 ou 4 ####");
+        System.out.println("add(\"toto\", \"valeur-toto\") à la place de: " + hashTable.add("toto", "valeur-toto"));
+        System.out.println("add(\"foo\", \"valeur-foo\") à la place de: " + hashTable.add("foo", "valeur-foo"));
+        System.out.println("add(\"bar\", \"valeur-bar\") à la place de: " + hashTable.add("bar", "valeur-bar"));
+        System.out.println("add(\"baz\", \"valeur-baz\") à la place de: " + hashTable.add("baz", "valeur-baz"));
+        System.out.println("add(\"titi\", \"valeur-titi\") à la place de: " + hashTable.add("titi", "valeur-titi"));
+        System.out.println("add(\"tutu\", \"valeur-tutu\") à la place de: " + hashTable.add("tutu", "valeur-tutu"));
         hashTable.display();
     }
 }

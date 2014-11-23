@@ -3,7 +3,7 @@ package com.github.gdrouet.hashtable;
 public class Test01 {
 
     public static void main(final String[] args) {
-        Hashtable t = new Hashtable();
+        Hashtable t = new Hashtable((s) -> s.length());
 
         t.table[1] = new Hashtable.Entry();
         t.table[1].key = "a";
@@ -24,6 +24,5 @@ public class Test01 {
         t.count = 3;
 
         t.display();
-        System.out.println("get(\"b1\"):" + t.get("b1"));
     }
 }

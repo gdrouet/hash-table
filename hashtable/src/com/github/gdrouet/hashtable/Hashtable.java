@@ -69,7 +69,7 @@ public class Hashtable {
     int count;
 
     /**
-     * Hash collisions count;
+     * Hash collisions count.
      */
     int collisions;
 
@@ -121,14 +121,38 @@ public class Hashtable {
         final Entry[] tmp = new Entry[table.length];
         System.arraycopy(table, 0, tmp, 0, table.length);
         table = new Entry[table.length + CAPACITY];
+        count = 0;
 
-        for (final Entry e : tmp) {
-            if (e == null) {
-                continue;
+        for (Entry e : tmp) {
+            while (e != null) {
+                e = addEntry(e);
             }
-
-            table[findIndex(e.key)] = e;
         }
+    }
+
+    /**
+     * <p>
+     * Ajoute l'entrée en paramètre dans la table et écrase l'éventuel maillon suivant.
+     * </p>
+     *
+     * @param e l'entrée à ajouter
+     * @return le maillon écrasé
+     */
+    private Entry addEntry(final Entry e) {
+        final Entry retval = e.next;
+        final int idx = findIndex(e.key);
+        Entry root = table[idx];
+
+        if (root != null) {
+            e.next = table[idx];
+        } else {
+            count++;
+            e.next = null;
+        }
+
+        table[idx] = e;
+
+        return retval;
     }
 
     /**

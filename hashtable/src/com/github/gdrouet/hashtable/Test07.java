@@ -1,56 +1,19 @@
 package com.github.gdrouet.hashtable;
 
-import java.util.HashMap;
-import java.util.function.Function;
-
 public class Test07 {
 
-    static final String[] WORDS = Generator.INSTANCE.generate();
-
-    static boolean warmUp = true;
-
     public static void main(final String[] args) {
-        // Warm up
-        run(null);
-        run((s) -> s.length());
-        run((s) -> s.hashCode());
-        runMap();
-        warmUp = false;
+        Hashtable hashTable = new Hashtable();
 
-        System.out.println("### Hash based on default hash ###");
-        run(null);
-        System.out.println();
-        System.out.println("### Hash based on length ###");
-        run((s) -> s.length());
-        System.out.println();
-        System.out.println("### Hash based on String.hashCode() ###");
-        run((s) -> s.hashCode());
-    }
+        System.out.println("add(\"foo\", \"valeur-foo\") à la place de: " + hashTable.add("foo", "valeur-foo"));
+        System.out.println("add(\"bar\", \"valeur-bar\") à la place de: " + hashTable.add("bar", "valeur-bar"));
+        System.out.println("add(\"baz\", \"valeur-baz\") à la place de: " + hashTable.add("baz", "valeur-baz"));
+        hashTable.display();
 
-    static void runMap() {
-        Long begin = System.currentTimeMillis();
-        final HashMap<String, String> hashTable = new HashMap<>();
-
-        for (int i = 0; i < WORDS.length; i++) {
-            hashTable.put(WORDS[i], "v");
-        }
-
-        if (!warmUp) {
-            System.out.println("Time: " + (System.currentTimeMillis() - begin) + "ms");
-        }
-    }
-
-    static void run(final Function<String, Integer> hashFunction) {
-        Long begin = System.currentTimeMillis();
-        final Hashtable hashTable = hashFunction == null ? new Hashtable() : new Hashtable(hashFunction);
-
-        for (int i = 0; i < WORDS.length; i++) {
-            hashTable.add(WORDS[i], "v");
-        }
-
-        if (!warmUp) {
-            System.out.println("Time: " + (System.currentTimeMillis() - begin) + "ms");
-            System.out.println("Hash collisions: " + hashTable.collisions);
-        }
+        System.out.println("remove(\"foo\")" + hashTable.remove("foo"));
+        System.out.println("remove(\"baz\")" + hashTable.remove("baz"));
+        System.out.println("remove(\"bar\")" + hashTable.remove("bar"));
+        System.out.println("remove(\"unkwn\")" + hashTable.remove("unkwn"));
+        hashTable.display();
     }
 }
