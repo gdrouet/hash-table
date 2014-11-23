@@ -25,6 +25,8 @@
 
 package com.github.gdrouet.hashtable;
 
+import java.util.function.Function;
+
 /**
  * Cette table de hachage permet de stocker une collection d'objets associés à une clé unique.
  */
@@ -67,20 +69,48 @@ public class Hashtable {
     int count;
 
     /**
-     * Construit une nouvelle instance.
+     * Hash collisions count;
      */
-    public Hashtable() {
+    int collisions;
+
+    /**
+     * Hash function.
+     */
+    Function<String, Integer> hashFunction;
+
+    /**
+     * Construit une nouvelle instance.
+     *
+     * @param function fonction de hachage
+     */
+    public Hashtable(final Function<String, Integer> function) {
         table = new Entry[CAPACITY];
+        hashFunction = function;
     }
 
     /**
-     * Calcul l'index dans la table pour une clé donnée sur laquelle une fonction de hachage est appliqué.
+     * Construit une nouvelle instance.
+     */
+    public Hashtable() {
+        this((s) -> {
+            int retval = 0;
+
+            for (int i = 0; i < s.length(); i++) {
+                retval += s.charAt(i);
+            }
+
+            return retval;
+        });
+    }
+
+    /**
+     * Calcul l'index dans la table pour une clé donnée sur laquelle une fonction de hachage est appliquée.
      *
      * @param key la clé
      * @return le résultat du hachage
      */
     private int findIndex(final String key) {
-        int hashCode = key.length();
+        int hashCode = hashFunction.apply(key);
         return hashCode & (table.length - 1);
     }
 
@@ -120,6 +150,8 @@ public class Hashtable {
 
         // Entrée existante
         if (entry != null) {
+            collisions++;
+
             // Mise à jour de la racine
             if (entry.key.equals(key)) {
                 link = entry;
