@@ -1,0 +1,550 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>TP 2 - Annuaire</title>
+      <link href="td.css" rel="STYLESHEET" type="text/css">
+    </head>
+
+    <body>
+        <h1>M3103 - TP 2&nbsp;</h1>
+        <h1>Annuaire d'étudiants</h1>
+        <h2>Principe</h2>
+        <h3>Le dictionnaire</h3>
+        <p>
+            Un dictionnaire est une association clé/valeur où la clé doit être unique. En revanche, les valeurs associées
+            à des clés différentes peuvent être identiques.
+        </p>
+        <p>
+            Par exemple, un dictionnaire de mots vient associer le mot lui-même (la clé) à sa définition (sa valeur). La
+            définition peut être la même dans le cas où le dictionnaire contient des synonymes.
+        </p>
+        <h3>La table de hachage</h3>
+        <p>
+            Un dictionnaire peut être stocké dans une table de hachage. Cette structure de données se représente à l'aide
+            d'un tableau dont les cases pointent vers des liste chaînées, elles-même contenant les paires clés/valeurs à
+            stocker.
+        </p>
+        <p>
+            L'accès à une valeur dans la table se réalise en deux temps:
+            <ul>
+                <li>D'abord, on repère la case du tableau en calculant son index à partir d'une transformation de la clé recherchée</li>
+                <li>Ensuite, on parcours récurcivement la liste chaînée contenue dans la case identifiée en comparant la clé à celle de chaque maillon</li>
+            </ul>
+            Le calcul de l'index dans la table peut donc donner le même résiultat pour plusieurs clés différentes.
+        </p>
+        <p>
+            Voici un exemple de représentation que l'on pourrait en faire (source: wikipedia)
+        </p>
+        <img src="normal-hash-table.png" />
+        <p>
+            La clé "Key 1" et la clé "Key 3" donnent la même valeur lorsqu'elles sont transformées par la fonction de hachage.
+            Cela permet de connaître la position de la liste chaînée commune aussi appelée "Bucket". Cette liste doit donc
+            contenir deux maillons.
+        </p>
+
+        <h2>Ex1. Structure de la table</h2>
+        <h3>Les classes Hashtable et Entry</h3>
+        <p>
+            La classe Hashtable permettra de représenter la table de hachage. Elle doit définir un attribut <code>table</code>
+            destiné à stocker des objets de type <code>Entry</code> dans un tableau avec une taille initiale. La classe
+            <code>Entry</code> est une classe interne de <code>Hashtable</code> et permet de représenter la liste chaînée
+            regroupant toutes les clés qui donnent la même valeur une fois la fonction de hachage appliquée. Elle devra
+            par ailleurs compter le nombre de cases occupées afin de savoir si un agrandissement de la table est nécessaire
+            ou pas à l'ajout d'une nouvelle entrée. Enfin, on souhaitera rendre paramétrable la fonction de hachage utilisée
+            par la classe. Pour ce faire, elle diposera d'un attribut de type <code>java.util.function.Function</code> dont
+            la méthode <code>apply</code>, à partir d'un paramètre de type <code>java.lang.String</code>, retournera un
+            <code>int</code> résultant du calcul de la fonction de hachage.
+        </p>
+        <p>
+            Créez le fichier <code>Hashtable.java</code> et complétez le à l'aide du code ci-dessous:
+        </p>
+            <pre class="output">
+    /**
+     * Cette table de hachage permet de stocker une collection d'objets associés à une clé unique.
+     */
+    public class Hashtable {
+
+        /**
+         * Taille initiale de la table de hachage.
+         */
+        private static final int CAPACITY = 16;
+
+        /**
+         * Un maillon d'une liste chaînée.
+         */
+        static final class Entry {
+
+            /**
+             * La clé du maillon.
+             */
+            String key;
+
+            /**
+             * La valeur.
+             */
+            Object value;
+
+            /**
+             * Le maillon suivant.
+             */
+            Entry next;
+        }
+
+        /**
+         * La table.
+         */
+        Entry[] table;
+
+        /**
+         * Nombre d'entrées dans la table.
+         */
+        int count;
+
+        /**
+         * Hash function.
+         */
+        Function<String, Integer> hashFunction;
+
+        /**
+         * Construit une nouvelle instance.
+         *
+         * @param function fonction de hachage
+         */
+        public Hashtable(final Function<String, Integer> function) {
+            table = new Entry[CAPACITY];
+            hashFunction = function;
+        }
+    }
+        </pre>
+
+        <h3>Affichage de la table</h3>
+        <p>
+            Définissez une méthode <code>public void display()</code> capable d'afficher le contenu de la table. Exécutez
+            la classe Test01 pour vérifier le résultat ci-dessous :
+        </p>
+        <pre class="output">
+        display(), (3/16) entries in the table:
+         a(len=1, index=1) = a-val
+         b1(len=2, index=2) = b-val
+         b2(len=2, index=2) = b-val
+         ccc(len=3, index=4) = c-val
+
+        4 elements displayed.
+        </pre>
+
+        <h2>Ex2. Recherche</h2>
+        <h3>Calcul de l'index</h3>
+        <p>
+            La classe doit calculer un index valide à partir de la valeur de hachage tout en tenant compte de la taille
+            de la table. Appuyez-vous sur la méthode ci-dessous pour obtenir un index valide à partir du résultat de la
+            fonction de hachage.
+        </p>
+        <pre class="output">
+    /**
+     * Calcul l'index dans la table pour une clé donnée sur laquelle une fonction de hachage est appliquée.
+     *
+     * @param key la clé
+     * @return le résultat du hachage
+     */
+    private int findIndex(final String key) {
+        int hashCode = hashFunction.apply(key);
+        return hashCode & (table.length - 1);
+    }
+        </pre>
+        <h3>La méthode de recherche</h3>
+        <p>
+            A partir de là, vous pouvez écrire une méthode <code>public Object get(java.lang.String)</code> retournant
+            l'objet associé à la clé indiquée en paramètre. Exécutez la class Test02 et vérifiez le résultat:
+        </p>
+        <pre class="output">
+    get("b1"):b-val
+    get("b2"):b-val2
+        </pre>
+
+        <h2>Ex3. Ajout</h2>
+        <h3>3.1 La fonction de hachage</h3>
+        <p>
+            La fonction de hachage est passée en paramètre par les classes de test que vous avez exécuté jusqu'à présent.
+            Ajoutez un constructeur par défaut qui propose sa propre fonction de hachage dans la classe <code>HashTable</code>.
+            Cette fonction de hachage doit retourner la somme des valeurs ASCII associées à chaque caractère de la clé.
+            Par exemple, la valeur ASCII du caractère 'A' est égale à 65, donc la fonction de hachage appliquée à 'AAA'
+            doit retourner 195.
+        </p>
+        <p>
+            Vous devez obtenir le résultat suivant à l'exécution de la classe Test03 :
+        </p>
+        <pre class="output">
+    [198, 198, 207, 207]
+        </pre>
+
+        <h3>3.2 La méthode add</h3>
+        <p>
+            Ecrivez la méthode <code>public java.lang.Object add(java.lang.String, java.lang.Object)</code> qui ajoute à
+            la table l'objet dans une <code>Entry</code> disponible à partir de l'index calculé avec la clé spécifiée en
+            paramètre. Pour cette première version, retournez toujours <code>null</code>. Vous devriez obtenir le résultat
+            ci-dessous à l'exécution de la classe Test04 :
+        </p>
+        <pre class="output">
+    #### Ajout de clés avec des longueurs de 3 ou 4 ####
+    add("toto", "valeur-toto") à la place de: null
+    add("foo", "valeur-foo") à la place de: null
+    add("bar", "valeur-bar") à la place de: null
+    add("baz", "valeur-baz") à la place de: null
+    add("titi", "valeur-titi") à la place de: null
+    add("tutu", "valeur-tutu") à la place de: null
+    display(), (6/16) entries in the table:
+     tutu(len=4, index=2) = valeur-tutu
+     foo(len=3, index=4) = valeur-foo
+     bar(len=3, index=5) = valeur-bar
+     toto(len=4, index=6) = valeur-toto
+     titi(len=4, index=10) = valeur-titi
+     baz(len=3, index=13) = valeur-baz
+
+    6 elements displayed.
+        </pre>
+
+        <h3>3.3 Mise à jour</h3>
+        <p>
+            Toute clé ajoutée dans la table est unique. Cela veut dire qu'un appel à la méthode <code>add</code> pour
+            une clé déjà présente dans la table doit mener à la mise à jour de la valeur dans l'<code>Entry</code>
+            existante, et non à la création d'une nouvelle instance. Modifiez la méthdode pour retourner l'ancienne valeur
+            dans le cadre d'une mise à jour. Vérifiez l'exécution de Test05 avec le résultat ci-dessous:
+        </p>
+        <pre class="output">
+    #### Ajout de clés avec des longueurs de 3 ou 4 ####
+    add("titi", "valeur-titi") à la place de: null
+    add("tutu", "valeur-tutu") à la place de: null
+    add("tutu", "valeur-tutu2") à la place de: valeur-tutu
+    display(), (2/16) entries in the table:
+     tutu(len=4, index=2) = valeur-tutu2
+     titi(len=4, index=10) = valeur-titi
+
+    2 elements displayed.
+        </pre>
+        <h3>3.4 Taille de la table</h3>
+        <p>
+            Si toutes les cases de la table sont occupées, cela veut qu'il y aura une collision systématique de l'index
+            calculé pour toute nouvelle valeur ajoutée. Modifiez votre méthode de façon à tester si la taille de la table
+            va être atteinte. Dans ce cas, redimensionner la table en augmentant sa taille d'un nombre de cases égale à
+            la valeur de la constante <code>CAPACITY</code>.
+        </p>
+        <p>
+            Vérifiez le bon résultat lors de l'exécution de la classe Test06 (attention à bien avoir 20/<b>32</b> entries) :
+        </p>
+        <pre class="output">
+    #### Ajout de clés avec des longueurs de 1 à 20 ####
+    add("a", "v"), len=1: null
+    add("aa", "v"), len=2: null
+    add("aaa", "v"), len=3: null
+    add("aaaa", "v"), len=4: null
+    add("aaaaa", "v"), len=5: null
+    add("aaaaaa", "v"), len=6: null
+    add("aaaaaaa", "v"), len=7: null
+    add("aaaaaaaa", "v"), len=8: null
+    add("aaaaaaaaa", "v"), len=9: null
+    add("aaaaaaaaaa", "v"), len=10: null
+    add("aaaaaaaaaaa", "v"), len=11: null
+    add("aaaaaaaaaaaa", "v"), len=12: null
+    add("aaaaaaaaaaaaa", "v"), len=13: null
+    add("aaaaaaaaaaaaaa", "v"), len=14: null
+    add("aaaaaaaaaaaaaaa", "v"), len=15: null
+    add("aaaaaaaaaaaaaaaa", "v"), len=16: null
+    add("aaaaaaaaaaaaaaaaa", "v"), len=17: null
+    add("aaaaaaaaaaaaaaaaaa", "v"), len=18: null
+    add("aaaaaaaaaaaaaaaaaaa", "v"), len=19: null
+    add("aaaaaaaaaaaaaaaaaaaa", "v"), len=20: null
+    display(), (20/32) entries in the table:
+     a(len=1, index=1) = v
+     aa(len=2, index=2) = v
+     aaa(len=3, index=3) = v
+     aaaa(len=4, index=4) = v
+     aaaaa(len=5, index=5) = v
+     aaaaaa(len=6, index=6) = v
+     aaaaaaa(len=7, index=7) = v
+     aaaaaaaa(len=8, index=8) = v
+     aaaaaaaaa(len=9, index=9) = v
+     aaaaaaaaaa(len=10, index=10) = v
+     aaaaaaaaaaa(len=11, index=11) = v
+     aaaaaaaaaaaa(len=12, index=12) = v
+     aaaaaaaaaaaaa(len=13, index=13) = v
+     aaaaaaaaaaaaaa(len=14, index=14) = v
+     aaaaaaaaaaaaaaa(len=15, index=15) = v
+     aaaaaaaaaaaaaaaa(len=16, index=16) = v
+     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
+     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
+     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
+     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
+
+    20 elements displayed.
+        </pre>
+
+        <h2>Ex4. Suppression</h2>
+        <p>
+            Implémentez une méthode <code>public Object remove(java.lang.String)</code> qui supprime l'entrée et retourne
+            la valeur associée. Vous pourrez vérifier votre implémentation avec l'exécution de la classe Test07:
+        </p>
+        <pre class="output">
+    add("foo", "valeur-foo") à la place de: null
+    add("bar", "valeur-bar") à la place de: null
+    add("baz", "valeur-baz") à la place de: null
+    display(), (3/16) entries in the table:
+     foo(len=3, index=4) = valeur-foo
+     bar(len=3, index=5) = valeur-bar
+     baz(len=3, index=13) = valeur-baz
+
+    3 elements displayed.
+    remove("foo")valeur-foo
+    remove("baz")valeur-baz
+    remove("bar")valeur-bar
+    remove("unkwn")null
+    display(), (0/16) entries in the table:
+
+    0 elements displayed.
+        </pre>
+
+        <h2>Ex5. Test complet</h2>
+        <p>
+            Eprouvez votre classe avec le test complet de la classe Test08 et corrigez d'éventuels écarts avec le résultat suivant:
+        </p>
+        <pre class="output">
+    #### Ajout de clés avec des longueurs de 3 ou 4 ####
+    add("toto", "valeur-toto") à la place de: null
+    add("foo", "valeur-foo") à la place de: null
+    add("bar", "valeur-bar") à la place de: null
+    add("baz", "valeur-baz") à la place de: null
+    add("titi", "valeur-titi") à la place de: null
+    add("tutu", "valeur-tutu") à la place de: null
+    add("tutu", "valeur-tutu2") à la place de: valeur-tutu
+    display(), (6/16) entries in the table:
+     tutu(len=4, index=2) = valeur-tutu2
+     foo(len=3, index=4) = valeur-foo
+     bar(len=3, index=5) = valeur-bar
+     toto(len=4, index=6) = valeur-toto
+     titi(len=4, index=10) = valeur-titi
+     baz(len=3, index=13) = valeur-baz
+
+    6 elements displayed.
+
+    #### Ajout de clés avec des longueurs de 5 à 20 ####
+    add("aaaaa", "v"), len=5: null
+    add("aaaaaa", "v"), len=6: null
+    add("aaaaaaa", "v"), len=7: null
+    add("aaaaaaaa", "v"), len=8: null
+    add("aaaaaaaaa", "v"), len=9: null
+    add("aaaaaaaaaa", "v"), len=10: null
+    add("aaaaaaaaaaa", "v"), len=11: null
+    add("aaaaaaaaaaaa", "v"), len=12: null
+    add("aaaaaaaaaaaaa", "v"), len=13: null
+    add("aaaaaaaaaaaaaa", "v"), len=14: null
+    add("aaaaaaaaaaaaaaa", "v"), len=15: null
+    add("aaaaaaaaaaaaaaaa", "v"), len=16: null
+    add("aaaaaaaaaaaaaaaaa", "v"), len=17: null
+    add("aaaaaaaaaaaaaaaaaa", "v"), len=18: null
+    add("aaaaaaaaaaaaaaaaaaa", "v"), len=19: null
+    add("aaaaaaaaaaaaaaaaaaaa", "v"), len=20: null
+    display(), (20/32) entries in the table:
+     foo(len=3, index=4) = valeur-foo
+     aaaaa(len=5, index=5) = v
+     aaaaaa(len=6, index=6) = v
+     toto(len=4, index=6) = valeur-toto
+     aaaaaaa(len=7, index=7) = v
+     aaaaaaaa(len=8, index=8) = v
+     aaaaaaaaa(len=9, index=9) = v
+     aaaaaaaaaa(len=10, index=10) = v
+     aaaaaaaaaaa(len=11, index=11) = v
+     aaaaaaaaaaaa(len=12, index=12) = v
+     aaaaaaaaaaaaa(len=13, index=13) = v
+     aaaaaaaaaaaaaa(len=14, index=14) = v
+     aaaaaaaaaaaaaaa(len=15, index=15) = v
+     aaaaaaaaaaaaaaaa(len=16, index=16) = v
+     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
+     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
+     tutu(len=4, index=18) = valeur-tutu2
+     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
+     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
+     bar(len=3, index=21) = valeur-bar
+     titi(len=4, index=26) = valeur-titi
+     baz(len=3, index=29) = valeur-baz
+
+    22 elements displayed.
+    get("baz"):valeur-baz
+    remove("foo")valeur-foo
+    display(), (19/32) entries in the table:
+     aaaaa(len=5, index=5) = v
+     aaaaaa(len=6, index=6) = v
+     toto(len=4, index=6) = valeur-toto
+     aaaaaaa(len=7, index=7) = v
+     aaaaaaaa(len=8, index=8) = v
+     aaaaaaaaa(len=9, index=9) = v
+     aaaaaaaaaa(len=10, index=10) = v
+     aaaaaaaaaaa(len=11, index=11) = v
+     aaaaaaaaaaaa(len=12, index=12) = v
+     aaaaaaaaaaaaa(len=13, index=13) = v
+     aaaaaaaaaaaaaa(len=14, index=14) = v
+     aaaaaaaaaaaaaaa(len=15, index=15) = v
+     aaaaaaaaaaaaaaaa(len=16, index=16) = v
+     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
+     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
+     tutu(len=4, index=18) = valeur-tutu2
+     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
+     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
+     bar(len=3, index=21) = valeur-bar
+     titi(len=4, index=26) = valeur-titi
+     baz(len=3, index=29) = valeur-baz
+
+    21 elements displayed.
+    remove("baz")valeur-baz
+    display(), (18/32) entries in the table:
+     aaaaa(len=5, index=5) = v
+     aaaaaa(len=6, index=6) = v
+     toto(len=4, index=6) = valeur-toto
+     aaaaaaa(len=7, index=7) = v
+     aaaaaaaa(len=8, index=8) = v
+     aaaaaaaaa(len=9, index=9) = v
+     aaaaaaaaaa(len=10, index=10) = v
+     aaaaaaaaaaa(len=11, index=11) = v
+     aaaaaaaaaaaa(len=12, index=12) = v
+     aaaaaaaaaaaaa(len=13, index=13) = v
+     aaaaaaaaaaaaaa(len=14, index=14) = v
+     aaaaaaaaaaaaaaa(len=15, index=15) = v
+     aaaaaaaaaaaaaaaa(len=16, index=16) = v
+     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
+     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
+     tutu(len=4, index=18) = valeur-tutu2
+     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
+     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
+     bar(len=3, index=21) = valeur-bar
+     titi(len=4, index=26) = valeur-titi
+
+    20 elements displayed.
+    remove("bar")valeur-bar
+    display(), (17/32) entries in the table:
+     aaaaa(len=5, index=5) = v
+     aaaaaa(len=6, index=6) = v
+     toto(len=4, index=6) = valeur-toto
+     aaaaaaa(len=7, index=7) = v
+     aaaaaaaa(len=8, index=8) = v
+     aaaaaaaaa(len=9, index=9) = v
+     aaaaaaaaaa(len=10, index=10) = v
+     aaaaaaaaaaa(len=11, index=11) = v
+     aaaaaaaaaaaa(len=12, index=12) = v
+     aaaaaaaaaaaaa(len=13, index=13) = v
+     aaaaaaaaaaaaaa(len=14, index=14) = v
+     aaaaaaaaaaaaaaa(len=15, index=15) = v
+     aaaaaaaaaaaaaaaa(len=16, index=16) = v
+     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
+     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
+     tutu(len=4, index=18) = valeur-tutu2
+     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
+     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
+     titi(len=4, index=26) = valeur-titi
+
+    19 elements displayed.
+
+    #### Suppression de clés avec des longueurs de 5 à 20 ####
+    remove("aaaaa"), len="5": v
+    remove("aaaaaa"), len="6": v
+    remove("aaaaaaa"), len="7": v
+    remove("aaaaaaaa"), len="8": v
+    remove("aaaaaaaaa"), len="9": v
+    remove("aaaaaaaaaa"), len="10": v
+    remove("aaaaaaaaaaa"), len="11": v
+    remove("aaaaaaaaaaaa"), len="12": v
+    remove("aaaaaaaaaaaaa"), len="13": v
+    remove("aaaaaaaaaaaaaa"), len="14": v
+    remove("aaaaaaaaaaaaaaa"), len="15": v
+    remove("aaaaaaaaaaaaaaaa"), len="16": v
+    remove("aaaaaaaaaaaaaaaaa"), len="17": v
+    remove("aaaaaaaaaaaaaaaaaa"), len="18": v
+    remove("aaaaaaaaaaaaaaaaaaa"), len="19": v
+    remove("aaaaaaaaaaaaaaaaaaaa"), len="20": v
+    display(), (3/32) entries in the table:
+     toto(len=4, index=6) = valeur-toto
+     tutu(len=4, index=18) = valeur-tutu2
+     titi(len=4, index=26) = valeur-titi
+
+    3 elements displayed.
+        </pre>
+
+        <h2>Ex6. Impact des collisions sur les performances</h2>
+        <p>
+            Dès qu'une collision intervient dans l'exécution d'une fonction de hachage, cela implique un coût de recherche
+            plus important car la liste chaînée récupérée ne contiendra pas qu'une seule valeur et devra être potentiellement
+            parcourue. Cette exercice a pour but de vous faire constater l'écart de performance entre deux fonctions de
+            hachage qui ne donnent pas le même nombre de collision.
+        </p>
+        <p>
+            Appuyez vous sur ce squelette pour créer la classe <code>Generator</code> :
+        </p>
+        <pre class="output">
+    import java.util.Random;
+
+    /**
+     * Génère un nombre aléatoire de mots.
+     */
+    public enum Generator {
+
+    /**
+     * Singleton.
+     */
+    INSTANCE;
+
+    /**
+     * Random value generator.
+     */
+    private Random rand = new Random();
+
+    /**
+     * Number of generated of WORDS.
+     */
+    private static final int NB_WORDS = 10000;
+
+    /**
+     * Minimal length.
+     */
+    private static final int MIN_LEN = 5;
+
+    /**
+     * Maximal length.
+     */
+    private static final int MAX_LEN = 15;
+
+    /**
+     * 'A' index in ASCII table (minimal character).
+     */
+    private static final int A_ASCII = 65;
+
+    /**
+     * 'Z' index in ASCII table (maximal character).
+     */
+    private static final int Z_ASCII = 90;
+
+    /**
+     * <p>
+     * Generates words.
+     * </p>
+     *
+     * @return the words.
+     */
+    public String[] generate() {
+
+    }
+        </pre>
+        <p>
+            La méthode <code>generate</code> doit retourner un tableau de <code>String</code> contenant 10000 mots ayant
+            une longueur comprise entre 5 et 15 caractères. Pour générer une valeur aléatoire comprise entre deux entiers,
+            reprenez cette technique standard :
+        </p>
+        <pre class="output">
+            new Random().nextInt((max - min) + 1) + min);
+        </pre>
+        <p>
+            En Java, un caractère peut très facilement être affiché à partir de sa valeur ascii : <code>char c = (char) 65</code>.
+        </p>
+        <p>
+            Exécutez la classe Test09 et constatez l'écart de performance. La méthode <code>java.lang.String#hashCode()</code>
+            utilise une technique de hachage basée sur le même principe que votre fonction de hachage par défaut.
+        </p>
+    </body>
+</html>
