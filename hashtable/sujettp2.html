@@ -22,16 +22,16 @@
         <h3>La table de hachage</h3>
         <p>
             Un dictionnaire peut être stocké dans une table de hachage. Cette structure de données se représente à l'aide
-            d'un tableau dont les cases pointent vers des liste chaînées, elles-même contenant les paires clés/valeurs à
+            d'un tableau dont les cases pointent vers des listes chaînées, elles-même contenant les paires clés/valeurs à
             stocker.
         </p>
         <p>
-            L'accès à une valeur dans la table se réalise en deux temps:
+            L'accès à une valeur dans la table se réalise en deux temps :
             <ul>
                 <li>D'abord, on repère la case du tableau en calculant son index à partir d'une transformation de la clé recherchée</li>
                 <li>Ensuite, on parcours récurcivement la liste chaînée contenue dans la case identifiée en comparant la clé à celle de chaque maillon</li>
             </ul>
-            Le calcul de l'index dans la table peut donc donner le même résiultat pour plusieurs clés différentes.
+            Le calcul de l'index dans la table peut donc donner le même résultat pour plusieurs clés différentes.
         </p>
         <p>
             Voici un exemple de représentation que l'on pourrait en faire (source: wikipedia)
