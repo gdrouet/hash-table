@@ -120,7 +120,7 @@ public class Hashtable {
     private void resize() {
         final Entry[] tmp = new Entry[table.length];
         System.arraycopy(table, 0, tmp, 0, table.length);
-        table = new Entry[table.length + CAPACITY];
+        table = new Entry[table.length * CAPACITY];
         count = 0;
 
         for (Entry e : tmp) {
