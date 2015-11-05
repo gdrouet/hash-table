@@ -9,6 +9,56 @@
     <body>
         <h1>M3103 - TP 2&nbsp;</h1>
         <h1>Annuaire d'étudiants</h1>
+        <h2>Pé-requis</h2>
+        <p>
+            L'utilisation de Java 8 est indispensable pour la réalisation de ce TP.
+            Assurez-vous d'avoir installé la dernière version du JDK sur votre poste.
+        </p>
+        <p>
+            Par ailleurs, vous devez être à l'aise avec la notion de lambda en Java introduite dans la version 8.
+            Sans aller dans les détails, les lambdas est une expression permettant de représenter l'implémentation
+            d'une interface ayant une méthode. Imaginez l'interface suivante:
+        </p>
+
+        <pre class="output">
+            public interface MonInterface {
+                int action(String s);
+            }
+        </pre>
+        <p>
+            Traditionellement, vous allez implémenter cette interface à l'aide d'une classe comme ceci:
+        </p>
+        <pre class="output">
+            public class MaClasse implements MonInterface {
+                public int action(String s) {
+                    return s.length();
+                }
+            }
+        </pre>
+        <p>
+            Dans notre exemple, l'implémentation retourne pour l'entier attendu la longueur de la chaîne de caractères
+            passée en paramètre. Vous allez pouvoir affecter a une variable de type <code>MonInterface</code> une valeur
+            comme ceci:
+        </p>
+
+        <pre class="output">
+            MonInterface m = new MaClasse();
+            int i = m.action("abc");
+        </pre>
+
+        <p>
+            Depuis Java 8, vous pouvez proposer une implementation anonyme de l'unique méthode de votre interface
+            plutôt que de créer une classe qui implémente l'interface cible:
+        </p>
+        <pre class="output">
+            MonInterface m = (s) -> s.length();
+            int i = m.action("abc");
+        </pre>
+        <p>
+            Cette lambda donne le même résultat que l'implémentation vue précédemment: elle considère un paramètre 's'
+            de type <code>java.lang.String</code> et une instruction à la suite de '->' dont la valeur générée est l'entier attendu en retour.
+        </p>
+
         <h2>Principe</h2>
         <h3>Le dictionnaire</h3>
         <p>
