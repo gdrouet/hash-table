@@ -1,5 +1,3 @@
-package com.github.gdrouet.hashtable;
-
 import java.util.function.Function;
 
 public class Test09 {

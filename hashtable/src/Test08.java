@@ -1,5 +1,3 @@
-package com.github.gdrouet.hashtable;
-
 public class Test08 {
 
     /**
