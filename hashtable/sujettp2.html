@@ -171,7 +171,7 @@
         <h3>Affichage de la table</h3>
         <p>
             Définissez une méthode <code>public void display()</code> capable d'afficher le contenu de la table. Exécutez
-            la classe Test01 pour vérifier le résultat ci-dessous :
+            la classe Test01, elle vérifiera que le résultat est conforme aux bloc ci-dessous :
         </p>
         <pre class="output">
         display(), (3/16) entries in the table:
@@ -205,7 +205,7 @@
         <h3>La méthode de recherche</h3>
         <p>
             A partir de là, vous pouvez écrire une méthode <code>public Object get(java.lang.String)</code> retournant
-            l'objet associé à la clé indiquée en paramètre. Exécutez la class Test02 et vérifiez le résultat:
+            l'objet associé à la clé indiquée en paramètre. Exécutez la class Test02 qui vérifiera le résultat:
         </p>
         <pre class="output">
     get("b1"):b-val
@@ -222,7 +222,7 @@
             doit retourner 195.
         </p>
         <p>
-            Vous devez obtenir le résultat suivant à l'exécution de la classe Test03 :
+            La classe Test03 vérifiera à l'exécution que les valeurs obtenues respectivement pour ABC, CBA, DEF et FED sont les suivantes :
         </p>
         <pre class="output">
     [198, 198, 207, 207]
@@ -232,17 +232,9 @@
         <p>
             Ecrivez la méthode <code>public java.lang.Object add(java.lang.String, java.lang.Object)</code> qui ajoute à
             la table l'objet dans une <code>Entry</code> disponible à partir de l'index calculé avec la clé spécifiée en
-            paramètre. Pour cette première version, retournez toujours <code>null</code>. Vous devriez obtenir le résultat
-            ci-dessous à l'exécution de la classe Test04 :
+            paramètre. Pour cette première version, retournez toujours <code>null</code>. La classe Test04 testera votre
+            code en ajoutant des clés et vérifiera le résultat en s'assurant que display donne ce résultat:
         </p>
-        <pre class="output">
-    #### Ajout de clés avec des longueurs de 3 ou 4 ####
-    add("toto", "valeur-toto") à la place de: null
-    add("foo", "valeur-foo") à la place de: null
-    add("bar", "valeur-bar") à la place de: null
-    add("baz", "valeur-baz") à la place de: null
-    add("titi", "valeur-titi") à la place de: null
-    add("tutu", "valeur-tutu") à la place de: null
     display(), (6/16) entries in the table:
      tutu(len=4, index=2) = valeur-tutu
      foo(len=3, index=4) = valeur-foo
@@ -259,13 +251,9 @@
             Toute clé ajoutée dans la table est unique. Cela veut dire qu'un appel à la méthode <code>add</code> pour
             une clé déjà présente dans la table doit mener à la mise à jour de la valeur dans l'<code>Entry</code>
             existante, et non à la création d'une nouvelle instance. Modifiez la méthdode pour retourner l'ancienne valeur
-            dans le cadre d'une mise à jour. Vérifiez l'exécution de Test05 avec le résultat ci-dessous:
+            dans le cadre d'une mise à jour. Vérifiez l'exécution de Test05 qui s'assure que a méthode display affiche ceci:
         </p>
         <pre class="output">
-    #### Ajout de clés avec des longueurs de 3 ou 4 ####
-    add("titi", "valeur-titi") à la place de: null
-    add("tutu", "valeur-tutu") à la place de: null
-    add("tutu", "valeur-tutu2") à la place de: valeur-tutu
     display(), (2/16) entries in the table:
      tutu(len=4, index=2) = valeur-tutu2
      titi(len=4, index=10) = valeur-titi
@@ -283,27 +271,6 @@
             Vérifiez le bon résultat lors de l'exécution de la classe Test06 (attention à bien avoir 20/<b>32</b> entries) :
         </p>
         <pre class="output">
-    #### Ajout de clés avec des longueurs de 1 à 20 ####
-    add("a", "v"), len=1: null
-    add("aa", "v"), len=2: null
-    add("aaa", "v"), len=3: null
-    add("aaaa", "v"), len=4: null
-    add("aaaaa", "v"), len=5: null
-    add("aaaaaa", "v"), len=6: null
-    add("aaaaaaa", "v"), len=7: null
-    add("aaaaaaaa", "v"), len=8: null
-    add("aaaaaaaaa", "v"), len=9: null
-    add("aaaaaaaaaa", "v"), len=10: null
-    add("aaaaaaaaaaa", "v"), len=11: null
-    add("aaaaaaaaaaaa", "v"), len=12: null
-    add("aaaaaaaaaaaaa", "v"), len=13: null
-    add("aaaaaaaaaaaaaa", "v"), len=14: null
-    add("aaaaaaaaaaaaaaa", "v"), len=15: null
-    add("aaaaaaaaaaaaaaaa", "v"), len=16: null
-    add("aaaaaaaaaaaaaaaaa", "v"), len=17: null
-    add("aaaaaaaaaaaaaaaaaa", "v"), len=18: null
-    add("aaaaaaaaaaaaaaaaaaa", "v"), len=19: null
-    add("aaaaaaaaaaaaaaaaaaaa", "v"), len=20: null
     display(), (20/32) entries in the table:
      a(len=1, index=1) = v
      aa(len=2, index=2) = v
@@ -335,19 +302,12 @@
             la valeur associée. Vous pourrez vérifier votre implémentation avec l'exécution de la classe Test07:
         </p>
         <pre class="output">
-    add("foo", "valeur-foo") à la place de: null
-    add("bar", "valeur-bar") à la place de: null
-    add("baz", "valeur-baz") à la place de: null
     display(), (3/16) entries in the table:
      foo(len=3, index=4) = valeur-foo
      bar(len=3, index=5) = valeur-bar
      baz(len=3, index=13) = valeur-baz
 
     3 elements displayed.
-    remove("foo")valeur-foo
-    remove("baz")valeur-baz
-    remove("bar")valeur-bar
-    remove("unkwn")null
     display(), (0/16) entries in the table:
 
     0 elements displayed.
