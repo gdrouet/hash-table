@@ -8,16 +8,16 @@
 
     <body>
         <h1>M3103 - TP 2&nbsp;</h1>
-        <h1>Annuaire d'étudiants</h1>
-        <h2>Pé-requis</h2>
+        <h1>Annuaire d'Ã©tudiants</h1>
+        <h2>PÃ©-requis</h2>
         <p>
-            L'utilisation de Java 8 est indispensable pour la réalisation de ce TP.
-            Assurez-vous d'avoir installé la dernière version du JDK sur votre poste.
+            L'utilisation de Java 8 est indispensable pour la rÃ©alisation de ce TP.
+            Assurez-vous d'avoir installÃ© la derniÃ¨re version du JDK sur votre poste.
         </p>
         <p>
-            Par ailleurs, vous devez être à l'aise avec la notion de lambda en Java introduite dans la version 8.
-            Sans aller dans les détails, les lambdas est une expression permettant de représenter l'implémentation
-            d'une interface ayant une méthode. Imaginez l'interface suivante:
+            Par ailleurs, vous devez Ãªtre Ã  l'aise avec la notion de lambda en Java introduite dans la version 8.
+            Sans aller dans les dÃ©tails, les lambdas est une expression permettant de reprÃ©senter l'implÃ©mentation
+            d'une interface ayant une mÃ©thode. Imaginez l'interface suivante:
         </p>
 
         <pre class="output">
@@ -26,7 +26,7 @@
             }
         </pre>
         <p>
-            Traditionellement, vous allez implémenter cette interface à l'aide d'une classe comme ceci:
+            Traditionellement, vous allez implÃ©menter cette interface Ã  l'aide d'une classe comme ceci:
         </p>
         <pre class="output">
             public class MaClasse implements MonInterface {
@@ -36,8 +36,8 @@
             }
         </pre>
         <p>
-            Dans notre exemple, l'implémentation retourne pour l'entier attendu la longueur de la chaîne de caractères
-            passée en paramètre. Vous allez pouvoir affecter a une variable de type <code>MonInterface</code> une valeur
+            Dans notre exemple, l'implÃ©mentation retourne pour l'entier attendu la longueur de la chaÃ®ne de caractÃ¨res
+            passÃ©e en paramÃ¨tre. Vous allez pouvoir affecter a une variable de type <code>MonInterface</code> une valeur
             comme ceci:
         </p>
 
@@ -47,71 +47,71 @@
         </pre>
 
         <p>
-            Depuis Java 8, vous pouvez proposer une implementation anonyme de l'unique méthode de votre interface
-            plutôt que de créer une classe qui implémente l'interface cible:
+            Depuis Java 8, vous pouvez proposer une implementation anonyme de l'unique mÃ©thode de votre interface
+            plutÃ´t que de crÃ©er une classe qui implÃ©mente l'interface cible:
         </p>
         <pre class="output">
             MonInterface m = (s) -> s.length();
             int i = m.action("abc");
         </pre>
         <p>
-            Cette lambda donne le même résultat que l'implémentation vue précédemment: elle considère un paramètre 's'
-            de type <code>java.lang.String</code> et une instruction à la suite de '->' dont la valeur générée est l'entier attendu en retour.
+            Cette lambda donne le mÃªme rÃ©sultat que l'implÃ©mentation vue prÃ©cÃ©demment: elle considÃ¨re un paramÃ¨tre 's'
+            de type <code>java.lang.String</code> et une instruction Ã  la suite de '->' dont la valeur gÃ©nÃ©rÃ©e est l'entier attendu en retour.
         </p>
 
         <h2>Principe</h2>
         <h3>Le dictionnaire</h3>
         <p>
-            Un dictionnaire est une association clé/valeur où la clé doit être unique. En revanche, les valeurs associées
-            à des clés différentes peuvent être identiques.
+            Un dictionnaire est une association clÃ©/valeur oÃ¹ la clÃ© doit Ãªtre unique. En revanche, les valeurs associÃ©es
+            Ã  des clÃ©s diffÃ©rentes peuvent Ãªtre identiques.
         </p>
         <p>
-            Par exemple, un dictionnaire de mots vient associer le mot lui-même (la clé) à sa définition (sa valeur). La
-            définition peut être la même dans le cas où le dictionnaire contient des synonymes.
+            Par exemple, un dictionnaire de mots vient associer le mot lui-mÃªme (la clÃ©) Ã  sa dÃ©finition (sa valeur). La
+            dÃ©finition peut Ãªtre la mÃªme dans le cas oÃ¹ le dictionnaire contient des synonymes.
         </p>
         <h3>La table de hachage</h3>
         <p>
-            Un dictionnaire peut être stocké dans une table de hachage. Cette structure de données se représente à l'aide
-            d'un tableau dont les cases pointent vers des listes chaînées, elles-même contenant les paires clés/valeurs à
+            Un dictionnaire peut Ãªtre stockÃ© dans une table de hachage. Cette structure de donnÃ©es se reprÃ©sente Ã  l'aide
+            d'un tableau dont les cases pointent vers des listes chaÃ®nÃ©es, elles-mÃªme contenant les paires clÃ©s/valeurs Ã 
             stocker.
         </p>
         <p>
-            L'accès à une valeur dans la table se réalise en deux temps :
+            L'accÃ¨s Ã  une valeur dans la table se rÃ©alise en deux temps :
             <ul>
-                <li>D'abord, on repère la case du tableau en calculant son index à partir d'une transformation de la clé recherchée</li>
-                <li>Ensuite, on parcours récurcivement la liste chaînée contenue dans la case identifiée en comparant la clé à celle de chaque maillon</li>
+                <li>D'abord, on repÃ¨re la case du tableau en calculant son index Ã  partir d'une transformation de la clÃ© recherchÃ©e</li>
+                <li>Ensuite, on parcours rÃ©curcivement la liste chaÃ®nÃ©e contenue dans la case identifiÃ©e en comparant la clÃ© Ã  celle de chaque maillon</li>
             </ul>
-            Le calcul de l'index dans la table peut donc donner le même résultat pour plusieurs clés différentes.
+            Le calcul de l'index dans la table peut donc donner le mÃªme rÃ©sultat pour plusieurs clÃ©s diffÃ©rentes.
         </p>
         <p>
-            Voici un exemple de représentation que l'on pourrait en faire (source: wikipedia)
+            Voici un exemple de reprÃ©sentation que l'on pourrait en faire (source: wikipedia)
         </p>
         <img src="normal-hash-table.png" />
         <p>
-            La clé "Key 1" et la clé "Key 3" donnent la même valeur lorsqu'elles sont transformées par la fonction de hachage.
-            Cela permet de connaître la position de la liste chaînée commune aussi appelée "Bucket". Cette liste doit donc
+            La clÃ© "Key 1" et la clÃ© "Key 3" donnent la mÃªme valeur lorsqu'elles sont transformÃ©es par la fonction de hachage.
+            Cela permet de connaÃ®tre la position de la liste chaÃ®nÃ©e commune aussi appelÃ©e "Bucket". Cette liste doit donc
             contenir deux maillons.
         </p>
 
         <h2>Ex1. Structure de la table</h2>
         <h3>Les classes Hashtable et Entry</h3>
         <p>
-            La classe Hashtable permettra de représenter la table de hachage. Elle doit définir un attribut <code>table</code>
-            destiné à stocker des objets de type <code>Entry</code> dans un tableau avec une taille initiale. La classe
-            <code>Entry</code> est une classe interne de <code>Hashtable</code> et permet de représenter la liste chaînée
-            regroupant toutes les clés qui donnent la même valeur une fois la fonction de hachage appliquée. Elle devra
-            par ailleurs compter le nombre de cases occupées afin de savoir si un agrandissement de la table est nécessaire
-            ou pas à l'ajout d'une nouvelle entrée. Enfin, on souhaitera rendre paramétrable la fonction de hachage utilisée
+            La classe Hashtable permettra de reprÃ©senter la table de hachage. Elle doit dÃ©finir un attribut <code>table</code>
+            destinÃ© Ã  stocker des objets de type <code>Entry</code> dans un tableau avec une taille initiale. La classe
+            <code>Entry</code> est une classe interne de <code>Hashtable</code> et permet de reprÃ©senter la liste chaÃ®nÃ©e
+            regroupant toutes les clÃ©s qui donnent la mÃªme valeur une fois la fonction de hachage appliquÃ©e. Elle devra
+            par ailleurs compter le nombre de cases occupÃ©es afin de savoir si un agrandissement de la table est nÃ©cessaire
+            ou pas Ã  l'ajout d'une nouvelle entrÃ©e. Enfin, on souhaitera rendre paramÃ©trable la fonction de hachage utilisÃ©e
             par la classe. Pour ce faire, elle diposera d'un attribut de type <code>java.util.function.Function</code> dont
-            la méthode <code>apply</code>, à partir d'un paramètre de type <code>java.lang.String</code>, retournera un
-            <code>int</code> résultant du calcul de la fonction de hachage.
+            la mÃ©thode <code>apply</code>, Ã  partir d'un paramÃ¨tre de type <code>java.lang.String</code>, retournera un
+            <code>int</code> rÃ©sultant du calcul de la fonction de hachage.
         </p>
         <p>
-            Créez le fichier <code>Hashtable.java</code> et complétez le à l'aide du code ci-dessous:
+            CrÃ©ez le fichier <code>Hashtable.java</code> et complÃ©tez le Ã  l'aide du code ci-dessous:
         </p>
             <pre class="output">
     /**
-     * Cette table de hachage permet de stocker une collection d'objets associés à une clé unique.
+     * Cette table de hachage permet de stocker une collection d'objets associÃ©s Ã  une clÃ© unique.
      */
     public class Hashtable {
 
@@ -121,12 +121,12 @@
         private static final int CAPACITY = 16;
 
         /**
-         * Un maillon d'une liste chaînée.
+         * Un maillon d'une liste chaÃ®nÃ©e.
          */
         static final class Entry {
 
             /**
-             * La clé du maillon.
+             * La clÃ© du maillon.
              */
             String key;
 
@@ -147,7 +147,7 @@
         Entry[] table;
 
         /**
-         * Nombre d'entrées dans la table.
+         * Nombre d'entrÃ©es dans la table.
          */
         int count;
 
@@ -170,8 +170,8 @@
 
         <h3>Affichage de la table</h3>
         <p>
-            Définissez une méthode <code>public void display()</code> capable d'afficher le contenu de la table. Exécutez
-            la classe Test01, elle vérifiera que le résultat est conforme aux bloc ci-dessous :
+            DÃ©finissez une mÃ©thode <code>public void display()</code> capable d'afficher le contenu de la table. ExÃ©cutez
+            la classe Test01, elle vÃ©rifiera que le rÃ©sultat est conforme aux bloc ci-dessous :
         </p>
         <pre class="output">
         display(), (3/16) entries in the table:
@@ -186,26 +186,26 @@
         <h2>Ex2. Recherche</h2>
         <h3>Calcul de l'index</h3>
         <p>
-            La classe doit calculer un index valide à partir de la valeur de hachage tout en tenant compte de la taille
-            de la table. Appuyez-vous sur la méthode ci-dessous pour obtenir un index valide à partir du résultat de la
+            La classe doit calculer un index valide Ã  partir de la valeur de hachage tout en tenant compte de la taille
+            de la table. Appuyez-vous sur la mÃ©thode ci-dessous pour obtenir un index valide Ã  partir du rÃ©sultat de la
             fonction de hachage.
         </p>
         <pre class="output">
     /**
-     * Calcul l'index dans la table pour une clé donnée sur laquelle une fonction de hachage est appliquée.
+     * Calcul l'index dans la table pour une clÃ© donnÃ©e sur laquelle une fonction de hachage est appliquÃ©e.
      *
-     * @param key la clé
-     * @return le résultat du hachage
+     * @param key la clÃ©
+     * @return le rÃ©sultat du hachage
      */
     private int findIndex(final String key) {
         int hashCode = hashFunction.apply(key);
         return hashCode & (table.length - 1);
     }
         </pre>
-        <h3>La méthode de recherche</h3>
+        <h3>La mÃ©thode de recherche</h3>
         <p>
-            A partir de là, vous pouvez écrire une méthode <code>public Object get(java.lang.String)</code> retournant
-            l'objet associé à la clé indiquée en paramètre. Exécutez la class Test02 qui vérifiera le résultat:
+            A partir de lÃ , vous pouvez Ã©crire une mÃ©thode <code>public Object get(java.lang.String)</code> retournant
+            l'objet associÃ© Ã  la clÃ© indiquÃ©e en paramÃ¨tre. ExÃ©cutez la class Test02 qui vÃ©rifiera le rÃ©sultat:
         </p>
         <pre class="output">
     get("b1"):b-val
@@ -215,43 +215,45 @@
         <h2>Ex3. Ajout</h2>
         <h3>3.1 La fonction de hachage</h3>
         <p>
-            La fonction de hachage est passée en paramètre par les classes de test que vous avez exécuté jusqu'à présent.
-            Ajoutez un constructeur par défaut qui propose sa propre fonction de hachage dans la classe <code>HashTable</code>.
-            Cette fonction de hachage doit retourner la somme des valeurs ASCII associées à chaque caractère de la clé.
-            Par exemple, la valeur ASCII du caractère 'A' est égale à 65, donc la fonction de hachage appliquée à 'AAA'
+            La fonction de hachage est passÃ©e en paramÃ¨tre par les classes de test que vous avez exÃ©cutÃ© jusqu'Ã  prÃ©sent.
+            Ajoutez un constructeur par dÃ©faut qui propose sa propre fonction de hachage dans la classe <code>HashTable</code>.
+            Cette fonction de hachage doit retourner la somme des valeurs ASCII associÃ©es Ã  chaque caractÃ¨re de la clÃ©.
+            Par exemple, la valeur ASCII du caractÃ¨re 'A' est Ã©gale Ã  65, donc la fonction de hachage appliquÃ©e Ã  'AAA'
             doit retourner 195.
         </p>
         <p>
-            La classe Test03 vérifiera à l'exécution que les valeurs obtenues respectivement pour ABC, CBA, DEF et FED sont les suivantes :
+            La classe Test03 vÃ©rifiera Ã  l'exÃ©cution que les valeurs obtenues respectivement pour ABC, CBA, DEF et FED sont les suivantes :
         </p>
         <pre class="output">
     [198, 198, 207, 207]
         </pre>
 
-        <h3>3.2 La méthode add</h3>
+        <h3>3.2 La mÃ©thode add</h3>
         <p>
-            Ecrivez la méthode <code>public java.lang.Object add(java.lang.String, java.lang.Object)</code> qui ajoute à
-            la table l'objet dans une <code>Entry</code> disponible à partir de l'index calculé avec la clé spécifiée en
-            paramètre. Pour cette première version, retournez toujours <code>null</code>. La classe Test04 testera votre
-            code en ajoutant des clés et vérifiera le résultat en s'assurant que display donne ce résultat:
+            Ecrivez la mÃ©thode <code>public java.lang.Object add(java.lang.String, java.lang.Object)</code> qui ajoute Ã 
+            la table l'objet dans une <code>Entry</code> disponible Ã  partir de l'index calculÃ© avec la clÃ© spÃ©cifiÃ©e en
+            paramÃ¨tre. Pour cette premiÃ¨re version, retournez toujours <code>null</code>. La classe Test04 testera votre
+            code en ajoutant des clÃ©s et vÃ©rifiera le rÃ©sultat en s'assurant que display donne ce rÃ©sultat:
         </p>
     display(), (6/16) entries in the table:
-     tutu(len=4, index=2) = valeur-tutu
-     foo(len=3, index=4) = valeur-foo
-     bar(len=3, index=5) = valeur-bar
-     toto(len=4, index=6) = valeur-toto
-     titi(len=4, index=10) = valeur-titi
-     baz(len=3, index=13) = valeur-baz
+      tutu(len=4, index=2) = valeur-tutu
+      foo(len=3, index=4) = valeur-foo
+      oof(len=3, index=4) = valeur-oof
+      bar(len=3, index=5) = valeur-bar
+      ofo(len=2, index=5) = valeur-ofo
+      toto(len=4, index=6) = valeur-toto
+      titi(len=4, index=10) = valeur-titi
+      baz(len=3, index=13) = valeur-baz
 
-    6 elements displayed.
+     8 elements displayed.
         </pre>
 
-        <h3>3.3 Mise à jour</h3>
+        <h3>3.3 Mise Ã  jour</h3>
         <p>
-            Toute clé ajoutée dans la table est unique. Cela veut dire qu'un appel à la méthode <code>add</code> pour
-            une clé déjà présente dans la table doit mener à la mise à jour de la valeur dans l'<code>Entry</code>
-            existante, et non à la création d'une nouvelle instance. Modifiez la méthdode pour retourner l'ancienne valeur
-            dans le cadre d'une mise à jour. Vérifiez l'exécution de Test05 qui s'assure que a méthode display affiche ceci:
+            Toute clÃ© ajoutÃ©e dans la table est unique. Cela veut dire qu'un appel Ã  la mÃ©thode <code>add</code> pour
+            une clÃ© dÃ©jÃ  prÃ©sente dans la table doit mener Ã  la mise Ã  jour de la valeur dans l'<code>Entry</code>
+            existante, et non Ã  la crÃ©ation d'une nouvelle instance. Modifiez la mÃ©thdode pour retourner l'ancienne valeur
+            dans le cadre d'une mise Ã  jour. VÃ©rifiez l'exÃ©cution de Test05 qui s'assure que a mÃ©thode display affiche ceci:
         </p>
         <pre class="output">
     display(), (2/16) entries in the table:
@@ -262,13 +264,13 @@
         </pre>
         <h3>3.4 Taille de la table</h3>
         <p>
-            Si toutes les cases de la table sont occupées, cela veut qu'il y aura une collision systématique de l'index
-            calculé pour toute nouvelle valeur ajoutée. Modifiez votre méthode de façon à tester si la taille de la table
-            va être atteinte. Dans ce cas, redimensionner la table en augmentant sa taille d'un nombre de cases égale à
+            Si toutes les cases de la table sont occupÃ©es, cela veut qu'il y aura une collision systÃ©matique de l'index
+            calculÃ© pour toute nouvelle valeur ajoutÃ©e. Modifiez votre mÃ©thode de faÃ§on Ã  tester si la taille de la table
+            va Ãªtre atteinte. Dans ce cas, redimensionner la table en augmentant sa taille d'un nombre de cases Ã©gale Ã 
             la valeur de la constante <code>CAPACITY</code>.
         </p>
         <p>
-            Vérifiez le bon résultat lors de l'exécution de la classe Test06 (attention à bien avoir 20/<b>32</b> entries) :
+            VÃ©rifiez le bon rÃ©sultat lors de l'exÃ©cution de la classe Test06 (attention Ã  bien avoir 20/<b>32</b> entries) :
         </p>
         <pre class="output">
     display(), (20/32) entries in the table:
@@ -298,8 +300,8 @@
 
         <h2>Ex4. Suppression</h2>
         <p>
-            Implémentez une méthode <code>public Object remove(java.lang.String)</code> qui supprime l'entrée et retourne
-            la valeur associée. Vous pourrez vérifier votre implémentation avec l'exécution de la classe Test07:
+            ImplÃ©mentez une mÃ©thode <code>public Object remove(java.lang.String)</code> qui supprime l'entrÃ©e et retourne
+            la valeur associÃ©e. Vous pourrez vÃ©rifier votre implÃ©mentation avec l'exÃ©cution de la classe Test07:
         </p>
         <pre class="output">
     display(), (3/16) entries in the table:
@@ -315,17 +317,17 @@
 
         <h2>Ex5. Test complet</h2>
         <p>
-            Eprouvez votre classe avec le test complet de la classe Test08 et corrigez d'éventuels écarts avec le résultat suivant:
+            Eprouvez votre classe avec le test complet de la classe Test08 et corrigez d'Ã©ventuels Ã©carts avec le rÃ©sultat suivant:
         </p>
         <pre class="output">
-    #### Ajout de clés avec des longueurs de 3 ou 4 ####
-    add("toto", "valeur-toto") à la place de: null
-    add("foo", "valeur-foo") à la place de: null
-    add("bar", "valeur-bar") à la place de: null
-    add("baz", "valeur-baz") à la place de: null
-    add("titi", "valeur-titi") à la place de: null
-    add("tutu", "valeur-tutu") à la place de: null
-    add("tutu", "valeur-tutu2") à la place de: valeur-tutu
+    #### Ajout de clÃ©s avec des longueurs de 3 ou 4 ####
+    add("toto", "valeur-toto") Ã  la place de: null
+    add("foo", "valeur-foo") Ã  la place de: null
+    add("bar", "valeur-bar") Ã  la place de: null
+    add("baz", "valeur-baz") Ã  la place de: null
+    add("titi", "valeur-titi") Ã  la place de: null
+    add("tutu", "valeur-tutu") Ã  la place de: null
+    add("tutu", "valeur-tutu2") Ã  la place de: valeur-tutu
     display(), (6/16) entries in the table:
      tutu(len=4, index=2) = valeur-tutu2
      foo(len=3, index=4) = valeur-foo
@@ -336,7 +338,7 @@
 
     6 elements displayed.
 
-    #### Ajout de clés avec des longueurs de 5 à 20 ####
+    #### Ajout de clÃ©s avec des longueurs de 5 Ã  20 ####
     add("aaaaa", "v"), len=5: null
     add("aaaaaa", "v"), len=6: null
     add("aaaaaaa", "v"), len=7: null
@@ -452,7 +454,7 @@
 
     19 elements displayed.
 
-    #### Suppression de clés avec des longueurs de 5 à 20 ####
+    #### Suppression de clÃ©s avec des longueurs de 5 Ã  20 ####
     remove("aaaaa"), len="5": v
     remove("aaaaaa"), len="6": v
     remove("aaaaaaa"), len="7": v
@@ -479,19 +481,19 @@
 
         <h2>Ex6. Impact des collisions sur les performances</h2>
         <p>
-            Dès qu'une collision intervient dans l'exécution d'une fonction de hachage, cela implique un coût de recherche
-            plus important car la liste chaînée récupérée ne contiendra pas qu'une seule valeur et devra être potentiellement
-            parcourue. Cette exercice a pour but de vous faire constater l'écart de performance entre deux fonctions de
-            hachage qui ne donnent pas le même nombre de collision.
+            DÃ¨s qu'une collision intervient dans l'exÃ©cution d'une fonction de hachage, cela implique un coÃ»t de recherche
+            plus important car la liste chaÃ®nÃ©e rÃ©cupÃ©rÃ©e ne contiendra pas qu'une seule valeur et devra Ãªtre potentiellement
+            parcourue. Cette exercice a pour but de vous faire constater l'Ã©cart de performance entre deux fonctions de
+            hachage qui ne donnent pas le mÃªme nombre de collision.
         </p>
         <p>
-            Appuyez vous sur ce squelette pour créer la classe <code>Generator</code> :
+            Appuyez vous sur ce squelette pour crÃ©er la classe <code>Generator</code> :
         </p>
         <pre class="output">
     import java.util.Random;
 
     /**
-     * Génère un nombre aléatoire de mots.
+     * GÃ©nÃ¨re un nombre alÃ©atoire de mots.
      */
     public enum Generator {
 
@@ -542,19 +544,19 @@
     }
         </pre>
         <p>
-            La méthode <code>generate</code> doit retourner un tableau de <code>String</code> contenant 10000 mots ayant
-            une longueur comprise entre 5 et 15 caractères. Pour générer une valeur aléatoire comprise entre deux entiers,
+            La mÃ©thode <code>generate</code> doit retourner un tableau de <code>String</code> contenant 10000 mots ayant
+            une longueur comprise entre 5 et 15 caractÃ¨res. Pour gÃ©nÃ©rer une valeur alÃ©atoire comprise entre deux entiers,
             reprenez cette technique standard :
         </p>
         <pre class="output">
             new Random().nextInt((max - min) + 1) + min);
         </pre>
         <p>
-            En Java, un caractère peut très facilement être affiché à partir de sa valeur ascii : <code>char c = (char) 65</code>.
+            En Java, un caractÃ¨re peut trÃ¨s facilement Ãªtre affichÃ© Ã  partir de sa valeur ascii : <code>char c = (char) 65</code>.
         </p>
         <p>
-            Exécutez la classe Test09 et constatez l'écart de performance. La méthode <code>java.lang.String#hashCode()</code>
-            utilise une technique de hachage basée sur le même principe que votre fonction de hachage par défaut.
+            ExÃ©cutez la classe Test09 et constatez l'Ã©cart de performance. La mÃ©thode <code>java.lang.String#hashCode()</code>
+            utilise une technique de hachage basÃ©e sur le mÃªme principe que votre fonction de hachage par dÃ©faut.
         </p>
     </body>
 </html>
