@@ -266,36 +266,36 @@
         <p>
             Si toutes les cases de la table sont occupées, cela veut qu'il y aura une collision systématique de l'index
             calculé pour toute nouvelle valeur ajoutée. Modifiez votre méthode de façon à tester si la taille de la table
-            va être atteinte. Dans ce cas, redimensionner la table en augmentant sa taille d'un nombre de cases égale à
-            la valeur de la constante <code>CAPACITY</code>.
+            va être atteinte. Dans ce cas, redimensionner la table en multipliant sa taille par la valeur de la constante
+            <code>CAPACITY</code>.
         </p>
         <p>
-            Vérifiez le bon résultat lors de l'exécution de la classe Test06 (attention à bien avoir 20/<b>32</b> entries) :
+            Vérifiez le bon résultat lors de l'exécution de la classe Test06 (attention à bien avoir 20/<b>256</b> entries) :
         </p>
         <pre class="output">
-    display(), (20/32) entries in the table:
-     a(len=1, index=1) = v
-     aa(len=2, index=2) = v
-     aaa(len=3, index=3) = v
-     aaaa(len=4, index=4) = v
-     aaaaa(len=5, index=5) = v
-     aaaaaa(len=6, index=6) = v
-     aaaaaaa(len=7, index=7) = v
-     aaaaaaaa(len=8, index=8) = v
-     aaaaaaaaa(len=9, index=9) = v
-     aaaaaaaaaa(len=10, index=10) = v
-     aaaaaaaaaaa(len=11, index=11) = v
-     aaaaaaaaaaaa(len=12, index=12) = v
-     aaaaaaaaaaaaa(len=13, index=13) = v
-     aaaaaaaaaaaaaa(len=14, index=14) = v
-     aaaaaaaaaaaaaaa(len=15, index=15) = v
-     aaaaaaaaaaaaaaaa(len=16, index=16) = v
-     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
-     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
-     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
-     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
+        display(), (20/256) entries in the table:
+         aaaaaaaa(len=8, index=8) = v
+         aaaaaaaaaaaaaaaa(len=16, index=16) = v
+         aaa(len=3, index=35) = v
+         aaaaaaaaaaa(len=11, index=43) = v
+         aaaaaaaaaaaaaaaaaaa(len=19, index=51) = v
+         aaaaaa(len=6, index=70) = v
+         aaaaaaaaaaaaaa(len=14, index=78) = v
+         a(len=1, index=97) = v
+         aaaaaaaaa(len=9, index=105) = v
+         aaaaaaaaaaaaaaaaa(len=17, index=113) = v
+         aaaa(len=4, index=132) = v
+         aaaaaaaaaaaa(len=12, index=140) = v
+         aaaaaaaaaaaaaaaaaaaa(len=20, index=148) = v
+         aaaaaaa(len=7, index=167) = v
+         aaaaaaaaaaaaaaa(len=15, index=175) = v
+         aa(len=2, index=194) = v
+         aaaaaaaaaa(len=10, index=202) = v
+         aaaaaaaaaaaaaaaaaa(len=18, index=210) = v
+         aaaaa(len=5, index=229) = v
+         aaaaaaaaaaaaa(len=13, index=237) = v
 
-    20 elements displayed.
+        20 elements displayed.
         </pre>
 
         <h2>Ex4. Suppression</h2>
@@ -320,163 +320,163 @@
             Eprouvez votre classe avec le test complet de la classe Test08 et corrigez d'éventuels écarts avec le résultat suivant:
         </p>
         <pre class="output">
-    #### Ajout de clés avec des longueurs de 3 ou 4 ####
-    add("toto", "valeur-toto") à la place de: null
-    add("foo", "valeur-foo") à la place de: null
-    add("bar", "valeur-bar") à la place de: null
-    add("baz", "valeur-baz") à la place de: null
-    add("titi", "valeur-titi") à la place de: null
-    add("tutu", "valeur-tutu") à la place de: null
-    add("tutu", "valeur-tutu2") à la place de: valeur-tutu
-    display(), (6/16) entries in the table:
-     tutu(len=4, index=2) = valeur-tutu2
-     foo(len=3, index=4) = valeur-foo
-     bar(len=3, index=5) = valeur-bar
-     toto(len=4, index=6) = valeur-toto
-     titi(len=4, index=10) = valeur-titi
-     baz(len=3, index=13) = valeur-baz
+        #### Ajout de clés avec des longueurs de 3 ou 4 ####
+        add("toto", "valeur-toto") à la place de: null
+        add("foo", "valeur-foo") à la place de: null
+        add("bar", "valeur-bar") à la place de: null
+        add("baz", "valeur-baz") à la place de: null
+        add("titi", "valeur-titi") à la place de: null
+        add("tutu", "valeur-tutu") à la place de: null
+        add("tutu", "valeur-tutu2") à la place de: valeur-tutu
+        display(), (6/16) entries in the table:
+         tutu(len=4, index=2) = valeur-tutu2
+         foo(len=3, index=4) = valeur-foo
+         bar(len=3, index=5) = valeur-bar
+         toto(len=4, index=6) = valeur-toto
+         titi(len=4, index=10) = valeur-titi
+         baz(len=3, index=13) = valeur-baz
 
-    6 elements displayed.
+        6 elements displayed.
 
-    #### Ajout de clés avec des longueurs de 5 à 20 ####
-    add("aaaaa", "v"), len=5: null
-    add("aaaaaa", "v"), len=6: null
-    add("aaaaaaa", "v"), len=7: null
-    add("aaaaaaaa", "v"), len=8: null
-    add("aaaaaaaaa", "v"), len=9: null
-    add("aaaaaaaaaa", "v"), len=10: null
-    add("aaaaaaaaaaa", "v"), len=11: null
-    add("aaaaaaaaaaaa", "v"), len=12: null
-    add("aaaaaaaaaaaaa", "v"), len=13: null
-    add("aaaaaaaaaaaaaa", "v"), len=14: null
-    add("aaaaaaaaaaaaaaa", "v"), len=15: null
-    add("aaaaaaaaaaaaaaaa", "v"), len=16: null
-    add("aaaaaaaaaaaaaaaaa", "v"), len=17: null
-    add("aaaaaaaaaaaaaaaaaa", "v"), len=18: null
-    add("aaaaaaaaaaaaaaaaaaa", "v"), len=19: null
-    add("aaaaaaaaaaaaaaaaaaaa", "v"), len=20: null
-    display(), (20/32) entries in the table:
-     foo(len=3, index=4) = valeur-foo
-     aaaaa(len=5, index=5) = v
-     aaaaaa(len=6, index=6) = v
-     toto(len=4, index=6) = valeur-toto
-     aaaaaaa(len=7, index=7) = v
-     aaaaaaaa(len=8, index=8) = v
-     aaaaaaaaa(len=9, index=9) = v
-     aaaaaaaaaa(len=10, index=10) = v
-     aaaaaaaaaaa(len=11, index=11) = v
-     aaaaaaaaaaaa(len=12, index=12) = v
-     aaaaaaaaaaaaa(len=13, index=13) = v
-     aaaaaaaaaaaaaa(len=14, index=14) = v
-     aaaaaaaaaaaaaaa(len=15, index=15) = v
-     aaaaaaaaaaaaaaaa(len=16, index=16) = v
-     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
-     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
-     tutu(len=4, index=18) = valeur-tutu2
-     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
-     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
-     bar(len=3, index=21) = valeur-bar
-     titi(len=4, index=26) = valeur-titi
-     baz(len=3, index=29) = valeur-baz
+        #### Ajout de clés avec des longueurs de 5 à 20 ####
+        add("aaaaa", "v"), len=5: null
+        add("aaaaaa", "v"), len=6: null
+        add("aaaaaaa", "v"), len=7: null
+        add("aaaaaaaa", "v"), len=8: null
+        add("aaaaaaaaa", "v"), len=9: null
+        add("aaaaaaaaaa", "v"), len=10: null
+        add("aaaaaaaaaaa", "v"), len=11: null
+        add("aaaaaaaaaaaa", "v"), len=12: null
+        add("aaaaaaaaaaaaa", "v"), len=13: null
+        add("aaaaaaaaaaaaaa", "v"), len=14: null
+        add("aaaaaaaaaaaaaaa", "v"), len=15: null
+        add("aaaaaaaaaaaaaaaa", "v"), len=16: null
+        add("aaaaaaaaaaaaaaaaa", "v"), len=17: null
+        add("aaaaaaaaaaaaaaaaaa", "v"), len=18: null
+        add("aaaaaaaaaaaaaaaaaaa", "v"), len=19: null
+        add("aaaaaaaaaaaaaaaaaaaa", "v"), len=20: null
+        display(), (21/256) entries in the table:
+         aaaaaaaa(len=8, index=8) = v
+         aaaaaaaaaaaaaaaa(len=16, index=16) = v
+         aaaaaaaaaaa(len=11, index=43) = v
+         aaaaaaaaaaaaaaaaaaa(len=19, index=51) = v
+         bar(len=3, index=53) = valeur-bar
+         baz(len=3, index=61) = valeur-baz
+         foo(len=3, index=68) = valeur-foo
+         aaaaaa(len=6, index=70) = v
+         aaaaaaaaaaaaaa(len=14, index=78) = v
+         aaaaaaaaa(len=9, index=105) = v
+         aaaaaaaaaaaaaaaaa(len=17, index=113) = v
+         aaaaaaaaaaaa(len=12, index=140) = v
+         aaaaaaaaaaaaaaaaaaaa(len=20, index=148) = v
+         aaaaaaa(len=7, index=167) = v
+         aaaaaaaaaaaaaaa(len=15, index=175) = v
+         titi(len=4, index=186) = valeur-titi
+         toto(len=4, index=198) = valeur-toto
+         aaaaaaaaaa(len=10, index=202) = v
+         aaaaaaaaaaaaaaaaaa(len=18, index=210) = v
+         tutu(len=4, index=210) = valeur-tutu2
+         aaaaa(len=5, index=229) = v
+         aaaaaaaaaaaaa(len=13, index=237) = v
 
-    22 elements displayed.
-    get("baz"):valeur-baz
-    remove("foo")valeur-foo
-    display(), (19/32) entries in the table:
-     aaaaa(len=5, index=5) = v
-     aaaaaa(len=6, index=6) = v
-     toto(len=4, index=6) = valeur-toto
-     aaaaaaa(len=7, index=7) = v
-     aaaaaaaa(len=8, index=8) = v
-     aaaaaaaaa(len=9, index=9) = v
-     aaaaaaaaaa(len=10, index=10) = v
-     aaaaaaaaaaa(len=11, index=11) = v
-     aaaaaaaaaaaa(len=12, index=12) = v
-     aaaaaaaaaaaaa(len=13, index=13) = v
-     aaaaaaaaaaaaaa(len=14, index=14) = v
-     aaaaaaaaaaaaaaa(len=15, index=15) = v
-     aaaaaaaaaaaaaaaa(len=16, index=16) = v
-     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
-     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
-     tutu(len=4, index=18) = valeur-tutu2
-     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
-     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
-     bar(len=3, index=21) = valeur-bar
-     titi(len=4, index=26) = valeur-titi
-     baz(len=3, index=29) = valeur-baz
+        22 elements displayed.
+        get("baz"):valeur-baz
+        remove("foo")valeur-foo
+        display(), (20/256) entries in the table:
+         aaaaaaaa(len=8, index=8) = v
+         aaaaaaaaaaaaaaaa(len=16, index=16) = v
+         aaaaaaaaaaa(len=11, index=43) = v
+         aaaaaaaaaaaaaaaaaaa(len=19, index=51) = v
+         bar(len=3, index=53) = valeur-bar
+         baz(len=3, index=61) = valeur-baz
+         aaaaaa(len=6, index=70) = v
+         aaaaaaaaaaaaaa(len=14, index=78) = v
+         aaaaaaaaa(len=9, index=105) = v
+         aaaaaaaaaaaaaaaaa(len=17, index=113) = v
+         aaaaaaaaaaaa(len=12, index=140) = v
+         aaaaaaaaaaaaaaaaaaaa(len=20, index=148) = v
+         aaaaaaa(len=7, index=167) = v
+         aaaaaaaaaaaaaaa(len=15, index=175) = v
+         titi(len=4, index=186) = valeur-titi
+         toto(len=4, index=198) = valeur-toto
+         aaaaaaaaaa(len=10, index=202) = v
+         aaaaaaaaaaaaaaaaaa(len=18, index=210) = v
+         tutu(len=4, index=210) = valeur-tutu2
+         aaaaa(len=5, index=229) = v
+         aaaaaaaaaaaaa(len=13, index=237) = v
 
-    21 elements displayed.
-    remove("baz")valeur-baz
-    display(), (18/32) entries in the table:
-     aaaaa(len=5, index=5) = v
-     aaaaaa(len=6, index=6) = v
-     toto(len=4, index=6) = valeur-toto
-     aaaaaaa(len=7, index=7) = v
-     aaaaaaaa(len=8, index=8) = v
-     aaaaaaaaa(len=9, index=9) = v
-     aaaaaaaaaa(len=10, index=10) = v
-     aaaaaaaaaaa(len=11, index=11) = v
-     aaaaaaaaaaaa(len=12, index=12) = v
-     aaaaaaaaaaaaa(len=13, index=13) = v
-     aaaaaaaaaaaaaa(len=14, index=14) = v
-     aaaaaaaaaaaaaaa(len=15, index=15) = v
-     aaaaaaaaaaaaaaaa(len=16, index=16) = v
-     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
-     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
-     tutu(len=4, index=18) = valeur-tutu2
-     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
-     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
-     bar(len=3, index=21) = valeur-bar
-     titi(len=4, index=26) = valeur-titi
+        21 elements displayed.
+        remove("baz")valeur-baz
+        display(), (19/256) entries in the table:
+         aaaaaaaa(len=8, index=8) = v
+         aaaaaaaaaaaaaaaa(len=16, index=16) = v
+         aaaaaaaaaaa(len=11, index=43) = v
+         aaaaaaaaaaaaaaaaaaa(len=19, index=51) = v
+         bar(len=3, index=53) = valeur-bar
+         aaaaaa(len=6, index=70) = v
+         aaaaaaaaaaaaaa(len=14, index=78) = v
+         aaaaaaaaa(len=9, index=105) = v
+         aaaaaaaaaaaaaaaaa(len=17, index=113) = v
+         aaaaaaaaaaaa(len=12, index=140) = v
+         aaaaaaaaaaaaaaaaaaaa(len=20, index=148) = v
+         aaaaaaa(len=7, index=167) = v
+         aaaaaaaaaaaaaaa(len=15, index=175) = v
+         titi(len=4, index=186) = valeur-titi
+         toto(len=4, index=198) = valeur-toto
+         aaaaaaaaaa(len=10, index=202) = v
+         aaaaaaaaaaaaaaaaaa(len=18, index=210) = v
+         tutu(len=4, index=210) = valeur-tutu2
+         aaaaa(len=5, index=229) = v
+         aaaaaaaaaaaaa(len=13, index=237) = v
 
-    20 elements displayed.
-    remove("bar")valeur-bar
-    display(), (17/32) entries in the table:
-     aaaaa(len=5, index=5) = v
-     aaaaaa(len=6, index=6) = v
-     toto(len=4, index=6) = valeur-toto
-     aaaaaaa(len=7, index=7) = v
-     aaaaaaaa(len=8, index=8) = v
-     aaaaaaaaa(len=9, index=9) = v
-     aaaaaaaaaa(len=10, index=10) = v
-     aaaaaaaaaaa(len=11, index=11) = v
-     aaaaaaaaaaaa(len=12, index=12) = v
-     aaaaaaaaaaaaa(len=13, index=13) = v
-     aaaaaaaaaaaaaa(len=14, index=14) = v
-     aaaaaaaaaaaaaaa(len=15, index=15) = v
-     aaaaaaaaaaaaaaaa(len=16, index=16) = v
-     aaaaaaaaaaaaaaaaa(len=17, index=17) = v
-     aaaaaaaaaaaaaaaaaa(len=18, index=18) = v
-     tutu(len=4, index=18) = valeur-tutu2
-     aaaaaaaaaaaaaaaaaaa(len=19, index=19) = v
-     aaaaaaaaaaaaaaaaaaaa(len=20, index=20) = v
-     titi(len=4, index=26) = valeur-titi
+        20 elements displayed.
+        remove("bar")valeur-bar
+        display(), (18/256) entries in the table:
+         aaaaaaaa(len=8, index=8) = v
+         aaaaaaaaaaaaaaaa(len=16, index=16) = v
+         aaaaaaaaaaa(len=11, index=43) = v
+         aaaaaaaaaaaaaaaaaaa(len=19, index=51) = v
+         aaaaaa(len=6, index=70) = v
+         aaaaaaaaaaaaaa(len=14, index=78) = v
+         aaaaaaaaa(len=9, index=105) = v
+         aaaaaaaaaaaaaaaaa(len=17, index=113) = v
+         aaaaaaaaaaaa(len=12, index=140) = v
+         aaaaaaaaaaaaaaaaaaaa(len=20, index=148) = v
+         aaaaaaa(len=7, index=167) = v
+         aaaaaaaaaaaaaaa(len=15, index=175) = v
+         titi(len=4, index=186) = valeur-titi
+         toto(len=4, index=198) = valeur-toto
+         aaaaaaaaaa(len=10, index=202) = v
+         aaaaaaaaaaaaaaaaaa(len=18, index=210) = v
+         tutu(len=4, index=210) = valeur-tutu2
+         aaaaa(len=5, index=229) = v
+         aaaaaaaaaaaaa(len=13, index=237) = v
 
-    19 elements displayed.
+        19 elements displayed.
 
-    #### Suppression de clés avec des longueurs de 5 à 20 ####
-    remove("aaaaa"), len="5": v
-    remove("aaaaaa"), len="6": v
-    remove("aaaaaaa"), len="7": v
-    remove("aaaaaaaa"), len="8": v
-    remove("aaaaaaaaa"), len="9": v
-    remove("aaaaaaaaaa"), len="10": v
-    remove("aaaaaaaaaaa"), len="11": v
-    remove("aaaaaaaaaaaa"), len="12": v
-    remove("aaaaaaaaaaaaa"), len="13": v
-    remove("aaaaaaaaaaaaaa"), len="14": v
-    remove("aaaaaaaaaaaaaaa"), len="15": v
-    remove("aaaaaaaaaaaaaaaa"), len="16": v
-    remove("aaaaaaaaaaaaaaaaa"), len="17": v
-    remove("aaaaaaaaaaaaaaaaaa"), len="18": v
-    remove("aaaaaaaaaaaaaaaaaaa"), len="19": v
-    remove("aaaaaaaaaaaaaaaaaaaa"), len="20": v
-    display(), (3/32) entries in the table:
-     toto(len=4, index=6) = valeur-toto
-     tutu(len=4, index=18) = valeur-tutu2
-     titi(len=4, index=26) = valeur-titi
+        #### Suppression de clés avec des longueurs de 5 à 20 ####
+        remove("aaaaa"), len="5": v
+        remove("aaaaaa"), len="6": v
+        remove("aaaaaaa"), len="7": v
+        remove("aaaaaaaa"), len="8": v
+        remove("aaaaaaaaa"), len="9": v
+        remove("aaaaaaaaaa"), len="10": v
+        remove("aaaaaaaaaaa"), len="11": v
+        remove("aaaaaaaaaaaa"), len="12": v
+        remove("aaaaaaaaaaaaa"), len="13": v
+        remove("aaaaaaaaaaaaaa"), len="14": v
+        remove("aaaaaaaaaaaaaaa"), len="15": v
+        remove("aaaaaaaaaaaaaaaa"), len="16": v
+        remove("aaaaaaaaaaaaaaaaa"), len="17": v
+        remove("aaaaaaaaaaaaaaaaaa"), len="18": v
+        remove("aaaaaaaaaaaaaaaaaaa"), len="19": v
+        remove("aaaaaaaaaaaaaaaaaaaa"), len="20": v
+        display(), (3/256) entries in the table:
+         titi(len=4, index=186) = valeur-titi
+         toto(len=4, index=198) = valeur-toto
+         tutu(len=4, index=210) = valeur-tutu2
 
-    3 elements displayed.
+        3 elements displayed.
         </pre>
 
         <h2>Ex6. Impact des collisions sur les performances</h2>
