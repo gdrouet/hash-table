@@ -22,12 +22,14 @@ public class Test04 {
         final char[] expected = ("display(), (6/16) entries in the table:\n" +
                 " tutu(len=4, index=2) = valeur-tutu\n" +
                 " foo(len=3, index=4) = valeur-foo\n" +
+                " oof(len=3, index=4) = valeur-oof\n" +
+                " ofo(len=3, index=4) = valeur-ofo\n" +
                 " bar(len=3, index=5) = valeur-bar\n" +
                 " toto(len=4, index=6) = valeur-toto\n" +
                 " titi(len=4, index=10) = valeur-titi\n" +
                 " baz(len=3, index=13) = valeur-baz\n" +
                 "\n" +
-                "6 elements displayed.\n").toCharArray();
+                "8 elements displayed.\n").toCharArray();
 
         hashTable.add("toto", "valeur-toto");
         hashTable.add("foo", "valeur-foo");
@@ -35,6 +37,8 @@ public class Test04 {
         hashTable.add("baz", "valeur-baz");
         hashTable.add("titi", "valeur-titi");
         hashTable.add("tutu", "valeur-tutu");
+        hashTable.add("oof", "valeur-oof");
+        hashTable.add("ofo", "valeur-ofo");
         hashTable.display();
 
         final char[] actual = caw.toCharArray();
