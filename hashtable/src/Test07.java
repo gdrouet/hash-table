@@ -21,14 +21,20 @@ public class Test07 {
 
         final char[] expected = ("display(), (3/16) entries in the table:\n" +
                 " foo(len=3, index=4) = valeur-foo\n" +
+                " oof(len=3, index=4) = valeur-oof\n" +
+                " ofo(len=3, index=4) = valeur-ofo\n" +
                 " bar(len=3, index=5) = valeur-bar\n" +
                 " baz(len=3, index=13) = valeur-baz\n" +
                 "\n" +
-                "3 elements displayed.\ndisplay(), (0/16) entries in the table:\n" +
+                "5 elements displayed.\ndisplay(), (1/16) entries in the table:\n" +
+                " oof(len=3, index=4) = valeur-oof\n" +
+                " ofo(len=3, index=4) = valeur-ofo\n" +
                 "\n" +
-                "0 elements displayed.\n").toCharArray();
+                "2 elements displayed.\n").toCharArray();
 
         hashTable.add("foo", "valeur-foo");
+        hashTable.add("oof", "valeur-oof");
+        hashTable.add("ofo", "valeur-ofo");
         hashTable.add("bar", "valeur-bar");
         hashTable.add("baz", "valeur-baz");
         hashTable.display();
