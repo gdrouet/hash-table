@@ -27,10 +27,9 @@ public class Test07 {
                 " baz(len=3, index=13) = valeur-baz\n" +
                 "\n" +
                 "5 elements displayed.\ndisplay(), (1/16) entries in the table:\n" +
-                " oof(len=3, index=4) = valeur-oof\n" +
                 " ofo(len=3, index=4) = valeur-ofo\n" +
                 "\n" +
-                "2 elements displayed.\n").toCharArray();
+                "1 elements displayed.\n").toCharArray();
 
         hashTable.add("foo", "valeur-foo");
         hashTable.add("oof", "valeur-oof");
@@ -39,6 +38,7 @@ public class Test07 {
         hashTable.add("baz", "valeur-baz");
         hashTable.display();
 
+        hashTable.remove("oof");
         hashTable.remove("foo");
         hashTable.remove("baz");
         hashTable.remove("bar");
